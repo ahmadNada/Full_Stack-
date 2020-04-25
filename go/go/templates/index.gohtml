@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Check wallet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+		
+        <style>
+            #form1 {
+                display:none;
+            }
+	
+        </style>
+
+        <script>
+            function myFunction() {
+                var x = document.getElementById("form1");
+                 var y = document.getElementById("para");
+                if (x.style.display === "none") {
+                    x.style.display = "block";    
+                    y.style.display = "none";
+                    document.getElementById('button').value="Hide Form";
+                } else {
+                    x.style.display = "none";
+                    y.style.display = "block";
+                    document.getElementById('button').value="Add Check";
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand/logo -->
+            <a class="navbar-expand-sm" href="#">
+                <img src="https://lebanon.tanqeeb.com/img/uploads/5cffc6e07fe2e_Logo-Mobation.png" width="200 px" height="70 px" alt="Mobation Logo"/>
+            </a>
+        </nav>
+
+        <div class="w3-animate-left">
+            <h1 style="text-shadow: 0 0 3px #800080;padding-left: 2em"> Check Wallet </h1>
+             <input type="button" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);" id="button" onclick="myFunction()" value="Add Check">
+        </div>
+       
+       <form action="/filter" method="GET">
+           <label> Filter Checks:</label>
+<select name="filter" id="filter">
+  <option value="Paid">Paid</option>
+  <option value="Not Paid">Not Paid</option>
+  <option value="showAll">Show All</option>
+</select>
+          <button type="submit" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">Filter Checks</button>
+       </form>
+        <form class="form-inline" action="/add" id="form1" method="POST" style=" padding-left: 10em">
+            <table>
+
+                <tr>
+                    <td><label class="control-label">Check Id: </label></td>
+                    <td> <input type="text" class="form-control" name="id" placeholder="Check ID" ></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Amount: </label></td>
+                    <td> <input type="text" class="form-control" name="amount" placeholder="Amount $" ></td>
+                </tr>
+                <br>
+                <tr>
+                    <td><label class="control-label">Bank </label></td>
+                    <td> <input type="text" class="form-control" name="bankName" placeholder="Bank Name" ></td>
+                </tr>
+                <br>
+                <tr>
+                    <td><label class="control-label">Due Date:  </label></td>
+                    <td> <input type="date" class="btn btn-default" name="dueDate"></td>
+                </tr>
+                <tr><td><button type="submit">Submit</button></td></tr>
+
+            </table>
+        </form>    
+
+        <div id='para'>
+		<table class="table table-dark table-striped">
+	<tr><th>ID</th><th>Amount</th><th>Bank Name</th><th>Due Date</th><th>Status</th><th> Pay</th> </tr>	
+          {{range .}}
+
+
+
+<tr><td>{{.ID}}</td><td>{{.Amount}}</td><td>{{.BankName}}</td><td>{{.DueDate}}</td><td>{{.Status}}</td><td><a href="/pay?id={{.ID}}"><i style='font-size:24px' class='fas'>&#xf53d;</i></td></tr>
+
+
+
+{{end}}
+</table>
+        </div>
+
+
+
+    </body>
+</html>
